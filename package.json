@@ -4,17 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.0",
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
-    "esbuild": "^0.14.11",
     "eslint": "^8.6.0",
     "jest": "^27.4.7",
+    "rollup": "^2.63.0",
     "ts-jest": "^27.1.2",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
   },
+  "files": [ "umd" ],
   "scripts": {
     "cli": "ts-node src/cli.ts",
     "test": "jest",
@@ -22,8 +24,7 @@
     "build-tsc": "tsc -p tsconfig.json",
     "clean": "rm -rf dist build",
     "ts-node": "ts-node",
-    "build-esbuild": "esbuild src/browser.ts --bundle --outfile=dist/esbuild/browser.js",
-    "build-all": "yarn build-esbuild && yarn build-tsc"
+    "build-rollup": "yarn rollup --config rollup.config.js"
   },
   "repository": {
     "type": "git",
