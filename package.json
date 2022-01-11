@@ -1,6 +1,6 @@
 {
   "name": "outdated-browser-banner",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
@@ -16,7 +16,9 @@
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
   },
-  "files": [ "umd" ],
+  "files": [
+    "umd"
+  ],
   "scripts": {
     "cli": "ts-node src/cli.ts",
     "test": "jest",
@@ -24,7 +26,7 @@
     "build-tsc": "tsc -p tsconfig.json",
     "clean": "rm -rf dist build",
     "ts-node": "ts-node",
-    "build-rollup": "yarn rollup --config rollup.config.js"
+    "build-rollup": "yarn rollup --config rollup.config.js --name umd-export"
   },
   "repository": {
     "type": "git",
