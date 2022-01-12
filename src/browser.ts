@@ -1,5 +1,7 @@
 import UAParser from "ua-parser-js";
 
+import './main.css'
+
 enum BROWSERS {
   CHROME = "chrome",
   SAFARI = "safari",
@@ -34,6 +36,25 @@ const browserInformation = {
   },
 };
 
+const createBanner = (url: string) => {
+  const el = document.createElement("div");
+  el.className = "banner-outer"
+
+  el.innerHTML = `
+  <div class="banner-style">
+    <div class="update-browser-container update-browser">
+      <p class="update-browser-text">UPDATE BROWSER</p>
+    </div>
+    <div class="update-browser-container">
+      <p>You&#39;re using an unsupported browser so you may experience issues. <a href=${url}>Please update here.</a></p>
+    </div>
+  </div>
+  `
+
+  const body = document.getElementsByTagName("body")[0];
+  body.insertBefore(el, body.firstChild)
+}
+
 const displayBanner = () => {
   const banner = document.getElementById("banner");
 
@@ -42,20 +63,10 @@ const displayBanner = () => {
   }
 }
 
-const setUpdateUrl = (url: string) => {
-  const updateLink = document.getElementById("update") as HTMLAnchorElement;
-
-  console.log("udpate link", updateLink)
-
-  if(updateLink) {
-    updateLink.href = url
-  }
-}
-
 const getUserVersion = (version?: string) =>
   version ? Number(version.split(".")[0]) : null;
 
-const checkOutdatedBrowserVersion = () => {
+const handleOutdatedBrowserVersion = () => {
   const { browser } = new UAParser(navigator.userAgent).getResult();
   const userBrowser = browser?.name?.toLocaleLowerCase() as BROWSERS;
   const userMajorVersion = getUserVersion(browser.version);
@@ -67,10 +78,11 @@ const checkOutdatedBrowserVersion = () => {
   const { minMajorVersion, updateUrl } = browserInformation[userBrowser];
   const shouldUpdate = userMajorVersion < minMajorVersion;
 
+  createBanner(updateUrl)
+
   if (shouldUpdate) {
-    setUpdateUrl(updateUrl)
     displayBanner();
   }
 };
 
-checkOutdatedBrowserVersion();
+handleOutdatedBrowserVersion();
